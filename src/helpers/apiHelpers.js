@@ -5,14 +5,16 @@ const asyncWrapper = (controller) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-    console.log("Middleware Error Hadnling");
-    const errStatus = err.statusCode || 500;
-    const errMsg = err.message || 'Something went wrong';
-    res.status(errStatus).json({
-        success: false,
-        status: errStatus,
-        message: errMsg,
-    })
-}
+  console.log("Middleware Error Hadnling");
+  const errStatus = err.status || 500;
+  const errMsg = err.message || "Something went wrong";
+  const errDescription = err.errors;
+  res.status(errStatus).json({
+    success: false,
+    status: errStatus,
+    message: errMsg,
+    description: errDescription,
+  });
+};
 
-module.exports = {asyncWrapper, errorHandler};
+module.exports = { asyncWrapper, errorHandler };
